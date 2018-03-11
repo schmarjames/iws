@@ -8,7 +8,13 @@ const Service = {
     url: `${api}features`,
     method: "POST",
     data: data
-  })
+  }),
+  getFormFeatureData: (endpoints) => endpoints.map(
+    (endpoint) => $.ajax({
+        url: `${api}${endpoint}`,
+        method: "GET"
+    })
+  )
 }
 
 export default Service;
