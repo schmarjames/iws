@@ -1,0 +1,37 @@
+{
+  "name": "iws-app-schmar-james",
+  "version": "1.0.0",
+  "description": "IWS Feature Request Application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/schmarjames/iws.git"
+  },
+  "author": "Schmar James",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/schmarjames/iws/issues"
+  },
+  "homepage": "https://github.com/schmarjames/iws#readme",
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babelify": "^8.0.0",
+    "browser-sync": "^2.23.6",
+    "browserify": "^16.1.1",
+    "gulp": "^3.9.1",
+    "gulp-cli": "^2.0.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-notify": "^3.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-uglify": "^3.0.0",
+    "gulp-util": "^3.0.8",
+    "merge-stream": "^1.0.1",
+    "path": "^0.12.7",
+    "vinyl-source-stream": "^2.0.0"
+  }
+}
