@@ -12,6 +12,34 @@ from api.models.model_feature import Feature, FeatureSchema
 
 
 route_path_general = Blueprint("route_path_general", __name__)
+modelMap = {
+    "feature" : {
+        "model": Feature,
+        "schema": FeatureSchema
+    },
+    "priority" : {
+        "model": Priority,
+        "schema": PrioritySchema
+    },
+    "product_area" : {
+        "model": ProductArea,
+        "schema": ProductAreaSchema
+    },
+    "client" : {
+        "model": Client,
+        "schema": ClientSchema
+    }
+}
+
+def queryAllData(modelType, only=[]):
+    fetched = modelMap[modelType]["model"].query.all()
+    model_type_schema = modelMap[modelType]["schema"](many=True, only=only)
+    return model_type_schema.dump(fetched)
+
+def querySpecificData(modelType, searchBy):
+    clientObj = modelMap[modelType]["model"].query.filter_by(id=searchBy)
+    model_type_schema = modelMap[modelType]["schema"](many=True)
+    return model_type_schema.dump(clientObj)
 
 ## CLIENTS
 @route_path_general.route('/v1.0/clients', methods=['POST'])
@@ -27,9 +55,7 @@ def create_client():
 
 @route_path_general.route('/v1.0/clients', methods=['GET'])
 def get_all_clients():
-    fetched = Client.query.all()
-    client_schema = ClientSchema(many=True, only=['id', 'name'])
-    clients, error = client_schema.dump(fetched)
+    clients, error = queryAllData('client', ['id', 'name'])
     return response_with(resp.SUCCESS_200, value={"clients": clients})
 
 ## PRODUCT AREA
@@ -46,9 +72,7 @@ def create_product_area():
 
 @route_path_general.route('/v1.0/product-area', methods=['GET'])
 def get_all_product_area():
-    fetched = ProductArea.query.all()
-    product_area_schema = ProductAreaSchema(many=True, only=['id', 'area_type'])
-    product_area, error = product_area_schema.dump(fetched)
+    product_area, error = queryAllData('product_area', ['id', 'area_type'])
     return response_with(resp.SUCCESS_200, value={"productArea": product_area})
 
 ## PRIORITY
@@ -65,9 +89,7 @@ def create_priority():
 
 @route_path_general.route('/v1.0/priorities', methods=['GET'])
 def get_all_priorities():
-    fetched = Priority.query.all()
-    priority_schema = PrioritySchema(many=True, only=['id', 'number', 'definition'])
-    priorities, error = priority_schema.dump(fetched)
+    priorities, error = queryAllData('priorities', ['id', 'number', 'definition'])
     return response_with(resp.SUCCESS_200, value={"priorities": priorities})
 
 ## FEATURES
@@ -86,7 +108,16 @@ def create_feature():
 
 @route_path_general.route('/v1.0/features', methods=['GET'])
 def get_all_features():
-    fetched = Feature.query.all()
-    feature_schema = FeatureSchema(many=True)
-    features, error = feature_schema.dump(fetched)
+    features, error = queryAllData('feature')
+
+    for feature in features:
+        client, error = querySpecificData('client', feature['client_id'])
+        feature['client'] = client.pop()['name']
+
+        priority, error = querySpecificData('priority', feature['priority_id'])
+        feature['priority'] = priority
+
+        product_area, error = querySpecificData('product_area', feature['product_area_id'])
+        feature['product_area'] = product_area.pop()['area_type']
+
     return response_with(resp.SUCCESS_200, value={"features": features})
