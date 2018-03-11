@@ -8,7 +8,9 @@ import os
 if __name__ == '__main__':
     if os.environ.get('WORK_ENV') == 'PROD':
         app = create_app(ProductionConfig)
-        app.run(port=5000, host="0.0.0.0", use_reloader=False)
+        port = int(os.environ.get('PORT', 5000))
+        app.run(host='0.0.0.0', port=port)
     else:
         app = create_app(DevelopmentConfig)
-        app.run(port=5000, host="0.0.0.0", use_reloader=True)
+        port = int(os.environ.get('PORT', 5000))
+        app.run(host='0.0.0.0', port=port)

@@ -78,6 +78,8 @@ def create_feature():
         feature_schema = FeatureSchema()
         feature, error = feature_schema.load(data)
         result = feature_schema.dump(feature.create()).data
+
+        print(result)
         return response_with(resp.SUCCESS_200, value={"feature": result})
     except Exception:
         return response_with(resp.INVALID_INPUT_422)
