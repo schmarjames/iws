@@ -1,6 +1,7 @@
+import Service from './service'
 import Feature from './feature'
+import FeatureViewModel from './feature-view-model'
 
-console.log(Feature);
 var opts = {
 	"title": "Multiple Domains",
 	"description": "User should be able to select and add multiple domains to there cart.",
@@ -9,5 +10,14 @@ var opts = {
 	"target_date": "4/27/2018",
 	"product_area_id": 2
 };
-var ft = new Feature(opts);
-console.log(ft.speak());
+
+// start view model
+var vm = new FeatureViewModel();
+ko.applyBindings(vm);
+
+// get all feature data
+Service
+  .getAllFeature()
+  .then((data) => data.features.forEach(
+    feature => vm.addNewFeature(new Feature(feature)))
+  );
