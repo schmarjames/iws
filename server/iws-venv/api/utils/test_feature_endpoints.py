@@ -31,5 +31,6 @@ class FeatureEndpointsTestCase(unittest.TestCase):
         	"target_date": "4/27/2018",
         	"product_area_id": 2
         }
-        response = self.app.post('/api/v1.0/features', data=payload)
+
+        response = self.app.post('/api/v1.0/features', data=json.dumps(payload), content_type='application/json')
         self.assertEqual(response.status_code, 200)

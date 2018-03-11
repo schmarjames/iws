@@ -1,3 +1,9 @@
+"""
+    Using the same database for all environments
+    for the sake of this challenge
+
+"""
+
 class Config(object):
     DEBUG = False
     TESTING = False
