@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from api import create_app
+from api.utils.factory import create_app
 from api.utils.config import DevelopmentConfig, ProductionConfig
 import os
 
