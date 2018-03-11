@@ -16,12 +16,15 @@
             <tr>
               <th>Title</th>
               <th>Description</th>
+              <th>Product Area</th>
+              <th>Priority</th>
             </tr>
         </thead>
         <tbody data-bind="foreach: feature_collection">
             <tr>
                 <td data-bind="text: title"></td>
                 <td data-bind="text: description"></td>
+                <td data-bind="text: product_area"></td>
             </tr>
         </tbody>
     </table>

@@ -3,9 +3,9 @@ class Feature {
     this.title = null;
     this.description = null;
     this.client_id = null;
-    this.priority_id = null;
+    this.priority = null;
     this.target_data = null;
-    this.product_area_id = null;
+    this.product_area = null;
 
     this.merge_parameters(opt);
   }

@@ -17,8 +17,12 @@ class App {
     // get all feature data
     Service
       .getAllFeature()
-      .then((data) => data.features.forEach(
-        feature => this.vm.addNewFeature(new Feature(feature)))
+      .then((data) => {
+          data.features.forEach(
+            feature => this.vm.addNewFeature(new Feature(feature))
+          )
+          console.log('obj ', this.vm);
+        }
       );
   }
 

@@ -5,7 +5,7 @@ class FeatureViewModel {
   }
 
   addNewFeature(new_feature) {
-    this.feature_collection.push(new_feature);
+    this.feature_collection.push(ko.observable(new_feature));
   }
 
   getFeatureCollection() {
@@ -16,7 +16,7 @@ class FeatureViewModel {
     console.log(formOptions);
     this.feature_form_options = Object.assign(this.feature_form_options, formOptions);
     console.log(this.feature_form_options);
-    
+
   }
 }
 
