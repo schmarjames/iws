@@ -75,7 +75,6 @@ def get_all_priorities():
 def create_feature():
     try:
         data = request.get_json()
-        print(request)
         feature_schema = FeatureSchema()
         feature, error = feature_schema.load(data)
         result = feature_schema.dump(feature.create()).data
