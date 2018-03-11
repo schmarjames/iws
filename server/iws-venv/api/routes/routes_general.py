@@ -89,7 +89,7 @@ def create_priority():
 
 @route_path_general.route('/v1.0/priorities', methods=['GET'])
 def get_all_priorities():
-    priorities, error = queryAllData('priorities', ['id', 'number', 'definition'])
+    priorities, error = queryAllData('priority', ['id', 'number', 'definition'])
     return response_with(resp.SUCCESS_200, value={"priorities": priorities})
 
 ## FEATURES
