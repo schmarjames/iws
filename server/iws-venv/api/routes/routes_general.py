@@ -115,7 +115,7 @@ def get_all_features():
         feature['client'] = client.pop()['name']
 
         priority, error = querySpecificData('priority', feature['priority_id'])
-        feature['priority'] = priority
+        feature['priority'] = priority.pop()
 
         product_area, error = querySpecificData('product_area', feature['product_area_id'])
         feature['product_area'] = product_area.pop()['area_type']
