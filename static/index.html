@@ -3,35 +3,102 @@
   <head>
     <meta charset="utf-8">
     <title>IWS</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css'>
     <link href="//fonts.googleapis.com/css?family=Titillium+Web:700|Source+Serif+Pro:400,700|Merriweather+Sans:400,700|Source+Sans+Pro:400,300,600,700,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="main.css">
   </head>
   <body>
 
-    <div id="main-view">
-      <table>
-        <thead>
-            <tr>
-              <th>Title</th>
-              <th>Description</th>
-              <th>Product Area</th>
-              <th>Priority</th>
-            </tr>
-        </thead>
-        <tbody data-bind="foreach: feature_collection">
-            <tr>
-                <td data-bind="text: title"></td>
-                <td data-bind="text: description"></td>
-                <td data-bind="text: product_area"></td>
-            </tr>
-        </tbody>
-    </table>
+    <div id="main-view" class="container-fluid">
+      <div class="col-md-12">
+        <div class="container header">
+          <div class="col-md-9"></div>
+          <div class="col-md-3">
+            <button type="button" class="btn btn-primary add-feature">Add Feature</button>
+          </div>
+        </div>
+        <table id="feature-table" class=" table table-bordered">
+          <thead>
+              <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Product Area</th>
+                <th>Priority</th>
+                <th>Client</th>
+              </tr>
+          </thead>
+          <tbody data-bind="foreach: feature_collection">
+              <tr class="feature-row" data-bind="attr: { 'data-feature': id }">
+                  <td data-bind="text: title"></td>
+                  <td data-bind="text: description"></td>
+                  <td data-bind="text: product_area"></td>
+                  <td data-bind="text: priority"></td>
+                  <td data-bind="text: client"></td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!--<div data-bind="with: feature_form_options_collection">
+        <div data-bind="foreach: clients">
+          <span data-bind="text: name"> </span>
+        </div>
+      </div>-->
     </div>
+
+    <div id="new-feature-modal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Modal title</h4>
+          </div>
+          <div class="modal-body">
+            <form id="new-feature-form" data-bind="submit: submitFeature">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Title</label>
+                <input data-bind="value : formData.title" type="text" class="form-control" id="title" name="title" placeholder="Title">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Description</label>
+                <textarea data-bind="value : formData.description" class="form-control" rows="3" name="description"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Client</label>
+                <select
+                  id="client"
+                  data-bind="options: clients, value: 'id', optionsText: 'name', selectedOptions: formData.client">
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Priority</label>
+                <input data-bind="value : formData.priority" type="text" class="form-control" id="priority" name="priority" placeholder="Priority">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Product Area</label>
+                <select
+                  id="product-area"
+                  data-bind="options: productArea, value: 'id', optionsText: 'area_type', selectedOptions: formData.product_area">
+                </select>
+              </div>
+              <div class="input-group date form-group">
+                <label for="target-date">Target Date</label>
+                <input data-bind="value : formData.target_date" type="text" id="datepicker" name="target-date">
+              </div>
+              <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
     <script src="main.js"></script>
   </body>

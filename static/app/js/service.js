@@ -7,7 +7,9 @@ const Service = {
   addFeature: (data) => $.ajax({
     url: `${api}features`,
     method: "POST",
-    data: data
+    data: data,
+    contentType: "application/json",
+    dataType: "json",
   }),
   getFormFeatureData: (endpoints) => endpoints.map(
     (endpoint) => $.ajax({

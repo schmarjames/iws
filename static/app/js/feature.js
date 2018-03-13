@@ -1,10 +1,11 @@
 class Feature {
   constructor(opt) {
+    this.id = null;
     this.title = null;
     this.description = null;
-    this.client_id = null;
+    this.client = null;
     this.priority = null;
-    this.target_data = null;
+    this.target_date = null;
     this.product_area = null;
 
     this.merge_parameters(opt);
@@ -16,10 +17,6 @@ class Feature {
         this[i] = opts[i];
       }
     }
-  }
-
-  speak() {
-    return 'this is the feature obj';
   }
 }
 

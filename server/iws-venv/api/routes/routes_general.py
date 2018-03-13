@@ -100,6 +100,7 @@ def create_feature():
 
         ## store new feature
         data = request.get_json()
+        print(data)
         feature_schema = FeatureSchema()
         feature, error = feature_schema.load(data)
         result = feature_schema.dump(feature.create()).data
