@@ -66,10 +66,5 @@ def response_with(response, value=None, message=None, error=None, headers={}, pa
 
     if pagination is not None:
         result.update({'pagination': pagination})
-    """
-    headers.update({'Access-Control-Allow-Origin': '*'})
-    headers.update({'Access-Control-Allow-Origin': 'http://localhost:4000'})
-    headers.update({'Access-Control-Allow-Headers': 'Content-Type,Authorization'})
-    """
 
     return make_response(jsonify(result), response['http_code'], headers)

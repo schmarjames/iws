@@ -76,24 +76,6 @@ def get_all_product_area():
     product_area, error = queryAllData('product_area', ['id', 'area_type'])
     return response_with(resp.SUCCESS_200, value={"productArea": product_area})
 
-## PRIORITY
-@route_path_general.route('/v1.0/priorities', methods=['POST'])
-def create_priority():
-    try:
-        data = request.get_json()
-        priority_schema = PrioritySchema()
-        priority, error = priority_schema.load(data)
-        result = priority_schema.dump(priority.create()).data
-
-        return response_with(resp.SUCCESS_200, value={"priority": result})
-    except Exception:
-        return response_with(resp.INVALID_INPUT_422)
-
-@route_path_general.route('/v1.0/priorities', methods=['GET'])
-def get_all_priorities():
-    priorities, error = queryAllData('priority', ['id', 'number', 'definition'])
-    return response_with(resp.SUCCESS_200, value={"priorities": priorities})
-
 ## FEATURES
 @route_path_general.route('/v1.0/features', methods=['POST'])
 def create_feature():
