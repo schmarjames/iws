@@ -34,16 +34,10 @@ class FeatureViewModel {
     const key = Object.keys(formOptions).shift();
     if (this.hasOwnProperty(key)) {
       formOptions[key].forEach((opt) => this[key].push(opt));
-      console.log(this);
     }
-
-    console.log(formOptions);
   }
 
   submitFeature(formEl) {
-    console.log(this.formData);
-    console.log(this.productArea);
-
     var data = {
       title: this.formData.title(),
       description: this.formData.description(),
