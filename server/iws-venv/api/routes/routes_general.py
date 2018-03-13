@@ -84,6 +84,7 @@ def create_priority():
         priority_schema = PrioritySchema()
         priority, error = priority_schema.load(data)
         result = priority_schema.dump(priority.create()).data
+
         return response_with(resp.SUCCESS_200, value={"priority": result})
     except Exception:
         return response_with(resp.INVALID_INPUT_422)
@@ -128,6 +129,13 @@ def create_feature():
                             cl_features[nextIndex]['priority'] = increment
                             client_features[nextIndex].priority = increment
                 db.session.commit()
+
+        if (bool(result)):
+            client, error = querySpecificData('client', result['client_id'])
+            result['client'] = client.pop()['name']
+
+            product_area, error = querySpecificData('product_area', result['product_area_id'])
+            result['product_area'] = product_area.pop()['area_type']
 
         return response_with(resp.SUCCESS_200, value={"feature": result})
     except Exception:
