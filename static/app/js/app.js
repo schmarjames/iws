@@ -13,11 +13,15 @@ class App {
 
     this.vm = null;
     this.editing = false;
+    this.$modal = null;
+    this.$addFeatureBtn = null;
+    this.$newFeatureForm = null;
+    this.$loader = null;
   }
 
   retreiveFeatures() {
     const self = this;
-    //this.vm.clearFeatures();
+    this.toggleLoader(true);
     Service
       .getAllFeature()
       .then((data) => self.loadTableData(data));
@@ -25,10 +29,16 @@ class App {
 
   loadTableData(data) {
     // get all feature data
-    data.features.forEach(
-      feature => this.vm.addNewFeature(new Feature(feature))
-    );
+    console.log(data);
+    if (Array.isArray(data.features)) {
+      data.features.forEach(
+        feature => this.vm.addNewFeature(new Feature(feature))
+      );
+    } else {
+      this.vm.addNewFeature(new Feature(data.feature));
+    }
     $("#feature-table").stupidtable();
+    this.toggleLoader(false);
   }
 
   loadFeatureFormData() {
@@ -44,25 +54,32 @@ class App {
   }
 
   logNewFeature(e, data) {
-    this.vm.clearFeatures();
+    this.toggleLoader(true);
     Service
       .addFeature(JSON.stringify(data))
       .then((res) => {
         console.log(res);
-        //self.loadTableData(data);
+        this.loadTableData(res);
+        this.$modal.trigger('hidden.bs.modal');
       });
   }
 
   toggleFeatureModal(e) {
-    e.preventDefault();
-    console.log(this.editing);
+    try{
+      e.preventDefault();
+    } catch(err) {}
+
     if (!this.editing) {
       this.editing = true;
-      $("#new-feature-modal").modal('show');
-    } else {
+      this.$modal.modal('show');
+    } else if (this.editing) {
       this.editing = false;
-      $("#new-feature-modal").modal('hide');
+      this.$modal.modal('hide');
     }
+  }
+
+  toggleLoader(status) {
+    (status) ? this.$loader.show() : this.$loader.hide();
   }
 
   initDatePicker() {
@@ -70,25 +87,28 @@ class App {
     var year = today.getFullYear();
     var month = today.getMonth();
     var day = today.getDate()+1;
-    console.log(year);
-    console.log(month);
-    console.log(day);
     $( "#datepicker" ).datepicker({
       minDate: new Date(year, month, day)
     });
   }
 
   init() {
+    // assign elements
+    this.$addFeatureBtn = $(".add-feature");
+    this.$newFeatureForm = $("#new-feature-form");
+    this.$modal = $("#new-feature-modal");
+    this.$loader = $("#loader");
+
     this.vm = new FeatureViewModel();
     ko.applyBindings(this.vm);
-    console.log(this.vm);
     this.retreiveFeatures();
     this.loadFeatureFormData();
     this.initDatePicker();
 
     // Events
-    $(".add-feature").on("click", this.toggleFeatureModal.bind(this));
-    $("#new-feature-form").on("captureData", this.logNewFeature.bind(this));
+    this.$addFeatureBtn.on("click", this.toggleFeatureModal.bind(this));
+    this.$newFeatureForm.on("captureData", this.logNewFeature.bind(this));
+    this.$modal.on('hidden.bs.modal', () => this.editing = false);
   }
 }
 
