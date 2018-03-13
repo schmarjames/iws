@@ -100,7 +100,6 @@ def create_feature():
 
         ## store new feature
         data = request.get_json()
-        print(data)
         feature_schema = FeatureSchema()
         feature, error = feature_schema.load(data)
         result = feature_schema.dump(feature.create()).data
@@ -130,7 +129,7 @@ def create_feature():
                             client_features[nextIndex].priority = increment
                 db.session.commit()
 
-        return response_with(resp.SUCCESS_200, value={"feature": list(result)})
+        return response_with(resp.SUCCESS_200, value={"feature": result})
     except Exception:
         return response_with(resp.INVALID_INPUT_422)
 
