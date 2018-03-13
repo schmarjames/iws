@@ -29,7 +29,6 @@ class App {
 
   loadTableData(data) {
     // get all feature data
-    console.log(data);
     if (Array.isArray(data.features)) {
       data.features.forEach(
         feature => this.vm.addNewFeature(new Feature(feature))
@@ -58,7 +57,6 @@ class App {
     Service
       .addFeature(JSON.stringify(data))
       .then((res) => {
-        console.log(res);
         this.loadTableData(res);
         this.$modal.trigger('hidden.bs.modal');
       });
