@@ -130,7 +130,7 @@ def create_feature():
                             client_features[nextIndex].priority = increment
                 db.session.commit()
 
-        return response_with(resp.SUCCESS_200, value={"feature": result})
+        return response_with(resp.SUCCESS_200, value={"feature": list(result)})
     except Exception:
         return response_with(resp.INVALID_INPUT_422)
 
