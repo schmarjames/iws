@@ -3,6 +3,16 @@
 body {
   font-family: 'Oswald', sans-serif;
 
+  #feature-table {
+    tbody {
+      tr {
+        td {
+          font-weight: 300;
+        }
+      }
+    }
+  }
+
   .header {
     margin: 20px 0;
 
