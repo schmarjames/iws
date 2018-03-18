@@ -1,3 +1,4 @@
+import dateformat from 'dateformat'
 import Service from './service'
 
 class FeatureViewModel {
@@ -19,6 +20,7 @@ class FeatureViewModel {
   }
 
   addNewFeature(new_feature) {
+    new_feature.target_date = dateformat(new Date(new_feature.target_date), 'mmm dd, yyyy');
     this.feature_collection.push(ko.observable(new_feature));
   }
 
