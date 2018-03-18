@@ -20,10 +20,8 @@ class App {
     this.tableOpts = {
       date: function(a,b){
           // Get these into date objects for comparison.
-          console.log(a);
-          console.log(b);
-          var aDate = this.date_from_string(a);
-          var bDate = this.date_from_string(b);
+          var aDate = this.dateFromString(a);
+          var bDate = this.dateFromString(b);
           return aDate - bDate;
         }.bind(this)
     }
@@ -37,13 +35,12 @@ class App {
       .then((data) => self.loadTableData(data));
   }
 
-  date_from_string(str){
+  dateFromString(str){
         var months = ["jan","feb","mar","apr","may","jun","jul",
                       "aug","sep","oct","nov","dec"];
         var pattern = "^([a-zA-Z]{3})\\s*(\\d{2}),\\s*(\\d{4})$";
         var re = new RegExp(pattern);
         var DateParts = re.exec(str).slice(1);
-        console.log(DateParts);
         var Year = DateParts[2];
         var Month = $.inArray(DateParts[0].toLowerCase(), months);
         var Day = DateParts[1];
